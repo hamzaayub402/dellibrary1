@@ -1,5 +1,6 @@
 package com.reactlibrary;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -10,6 +11,7 @@ import com.facebook.react.bridge.Callback;
 public class DelLibrary1Module extends ReactContextBaseJavaModule {
 
     private final ReactApplicationContext reactContext;
+    ReactApplicationContext context = getReactApplicationContext();
 
     public DelLibrary1Module(ReactApplicationContext reactContext) {
         super(reactContext);
@@ -30,5 +32,12 @@ public class DelLibrary1Module extends ReactContextBaseJavaModule {
     @ReactMethod
     public void testLog() {
         Log.d("HTAG", "testLog: This method is called..");
+        Intent intent = new Intent(context, LiveStream.class);
+        Log.d("HTAG", "testLog:  below Intent : ");
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            Log.d("HTAG", "testLog: Context Intent here... ");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
     }
 }
